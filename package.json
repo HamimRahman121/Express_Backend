@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+"scripts": {
+  "dev": "tsx watch src/server.ts",
+  "build": "tsc",
+  "start": "node dist/server.js",
+  "db:generate": "drizzle-kit generate",
+  "db:migrate": "tsx src/scripts/migrate.ts",
+  "seed:admin": "tsx src/scripts/seed-admin.ts"
+},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HamimRahman121/Express_Backend.git"
@@ -13,7 +18,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/HamimRahman121/Express_Backend/issues"
   },
