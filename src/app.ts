@@ -3,6 +3,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import { errorHandler } from './middleware/error.js';
+import authRoutes from './routes/auth.js';          // <-- NOTUN import
 
 export const app = express();
 
@@ -23,7 +24,7 @@ app.get('/api', (_req, res) => {
   });
 });
 
-// ROUTES-MOUNT: porer step-gulote ekhane route add hobe
+app.use('/api/auth', authRoutes);                   // <-- NOTUN mount
 
 app.use((_req, res) => res.status(404).json({ message: 'Not found' }));
 app.use(errorHandler);
