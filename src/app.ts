@@ -3,7 +3,8 @@ import helmet from 'helmet';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import { errorHandler } from './middleware/error.js';
-import authRoutes from './routes/auth.js';          // <-- NOTUN import
+import authRoutes from './routes/auth.js';
+import profileRoutes from './routes/profile.js';      // <-- NOTUN
 
 export const app = express();
 
@@ -24,7 +25,8 @@ app.get('/api', (_req, res) => {
   });
 });
 
-app.use('/api/auth', authRoutes);                   // <-- NOTUN mount
+app.use('/api/auth', authRoutes);
+app.use('/api/profile', profileRoutes);               // <-- NOTUN
 
 app.use((_req, res) => res.status(404).json({ message: 'Not found' }));
 app.use(errorHandler);
