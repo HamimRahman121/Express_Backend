@@ -4,7 +4,7 @@ import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 import { env } from '../config/env.js';
 import { db } from '../db/pool.js';
-import { revokedTokens } from '../db/schema.js';
+import { revokedTokens, users } from '../db/schema.js';
 
 const accessTokenSchema = z.object({
   sub: z.uuid(),
@@ -33,11 +33,16 @@ export const requireAuth: RequestHandler = async (req, res, next) => {
       .where(eq(revokedTokens.jti, payload.jti))
       .limit(1);
     if (revoked) return res.status(401).json({ message: 'Token has been signed out' });
+
+    const [user] = await db.select({ id: users.id, role: users.role })
+      .from(users).where(eq(users.id, payload.sub)).limit(1);
+    if (!user) return res.status(401).json({ message: 'User no longer exists' });
+
+    req.user = { id: user.id, role: user.role, jti: payload.jti, exp: payload.exp };
   } catch (error) {
     return next(error);
   }
 
-  req.user = { id: payload.sub, role: payload.role, jti: payload.jti, exp: payload.exp };
   next();
 };
 

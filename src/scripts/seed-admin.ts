@@ -3,7 +3,7 @@ import { eq } from 'drizzle-orm';
 import { db, pool } from '../db/pool.js';
 import { users } from '../db/schema.js';
 import { env } from '../config/env.js';
-import { signupSchema } from '../validators.js';
+import { signupSchema } from '../modules/auth/auth.schema.js';
 
 try {
   if (!env.ADMIN_EMAIL || !env.ADMIN_PASSWORD) throw new Error('ADMIN_EMAIL / ADMIN_PASSWORD missing in .env');
