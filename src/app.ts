@@ -26,7 +26,6 @@ app.get('/api', (_req, res) => {
   });
 });
 
-app.use('/api/admin', adminRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);         
 app.use('/api/admin', adminRoutes);
